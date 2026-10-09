@@ -86,6 +86,17 @@ function validBank(b) {
 let bank = store.get(KEY_B, null);
 if (!validBank(bank)) bank = defaultBank();
 bank.modesOff = bank.modesOff || [];
+// Mise à jour de la banque d'origine sans perdre les modifications locales
+if ((bank.rev || 0) < (D.revision || 0)) {
+  D.themes.forEach(t => { if (!bank.themes.some(x => x.id === t.id)) bank.themes.push({ ...t }); });
+  D.questions.forEach(q => {
+    const ex = bank.questions.find(x => x.id === q.id);
+    if (!ex) { if (!bank.questions.some(x => norm(x.text) === norm(q.text))) bank.questions.push({ ...q }); }
+    else q.modes.forEach(m => { if (!ex.modes.includes(m)) ex.modes.push(m); });
+  });
+  bank.rev = D.revision; store.set(KEY_B, bank);
+}
+bank.rev = bank.rev || D.revision;
 bank.nextId = Math.max(bank.nextId || 0, ...bank.questions.map(q => q.id + 1));
 bank.nextTheme = Math.max(bank.nextTheme || 0, ...bank.themes.map(t => t.id + 1));
 const saveBank = () => { if (!store.set(KEY_B, bank)) toast('Stockage local indisponible : les modifications ne seront pas conservées.'); };
@@ -477,7 +488,7 @@ function adminRow(q) {
   }
   return `<li class="qrow${q.active === false ? ' inactive' : ''}"><span class="qid">${q.id}</span><div>${esc(q.text)}</div>
     <span class="qb"><button class="btn btn-line btn-sm" type="button" data-act="q-edit" data-id="${q.id}">Modifier</button><button class="btn btn-danger btn-sm" type="button" data-act="q-del" data-id="${q.id}">Supprimer</button></span>
-    <span class="qm"><span class="tag">${esc(themeOf(q.th).name)}</span>${q.modes.map(m => `<span class="tag">${esc(modeById(m) ? modeById(m).short : m)}</span>`).join('')}<span>Diff. ${q.d || 1}</span>${q.ty ? `<span>${esc(q.ty)}</span>` : ''}${q.sensitive ? '<span>Sensible</span>' : ''}${q.source ? `<span>Source : ${esc(q.source)}${q.date ? ' (' + esc(q.date) + ')' : ''}</span>` : ''}
+    <span class="qm"><span class="tag">${esc(themeOf(q.th).name)}</span>${q.modes.map(m => `<span class="tag">${esc(modeById(m) ? modeById(m).short : m)}</span>`).join('')}<span>Diff. ${q.d || 1}</span>${q.src === 'initiale' ? '<span class="tag">Banque initiale</span>' : ''}${q.ty ? `<span>${esc(q.ty)}</span>` : ''}${q.sensitive ? '<span>Sensible</span>' : ''}${q.source ? `<span>Source : ${esc(q.source)}${q.date ? ' (' + esc(q.date) + ')' : ''}</span>` : ''}
     <label class="chk"><input type="checkbox" data-qactive="${q.id}"${q.active !== false ? ' checked' : ''}> Active</label></span></li>`;
 }
 const isDup = (text, exceptId) => bank.questions.some(q => q.id !== exceptId && norm(q.text) === norm(text));
