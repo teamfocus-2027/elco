@@ -101,6 +101,12 @@ code{background:var(--beige);padding:0 .3em;border-radius:3px;font-size:.9em}
 .sector.win{filter:brightness(1.18) saturate(1.1)}
 .sector.win-dim{opacity:.55}
 .sector{transition:opacity .4s,filter .4s}
+.studio>*,.qrow>*{min-width:0}
+@media (max-width:400px){.cat-list summary{gap:.6rem}.cat-list .ct{min-width:0}.cat-list .cc{white-space:normal;text-align:right;max-width:4.6rem;font-size:.8rem}.cat-list .cn{width:1.4rem}}
+.qrow .qm{flex-wrap:wrap}
+.qrow .qm select{max-width:100%}
+.focus select,.admin-bar select,.add select{max-width:100%;min-width:0;text-overflow:ellipsis}
+.wheel-col{max-width:100%}
 .focus{display:flex;align-items:center;gap:.6rem;width:100%;max-width:520px}
 .focus label{font:700 .78rem var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--terra)}
 .focus select{flex:1;min-width:0;width:auto}
