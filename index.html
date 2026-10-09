@@ -3,9 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
 <title>ELCO — Les femmes dans le BTP au Sénégal</title>
-<meta name="description" content="ELCO, le podcast qui donne la parole aux femmes du BTP au Sénégal. Une roulette de 100 questions pour deux voix et un micro.">
-<meta name="theme-color" content="#6B1F2B">
+<meta name="description" content="ELCO, le podcast des femmes du BTP au Sénégal : une roulette de questions, neuf modes, deux voix et un micro.">
+<meta name="theme-color" content="#650026">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="styles.css">
@@ -13,258 +14,245 @@
 <body>
 <a class="skip" href="#main">Aller au contenu</a>
 
-<header class="top" id="top">
-  <a class="logo" href="#accueil" aria-label="ELCO — accueil">
-    <svg class="logo-mark" viewBox="0 0 40 40" aria-hidden="true">
-      <rect x="4" y="5" width="32" height="7" fill="#6B1F2B"/>
-      <rect x="4" y="16.5" width="22" height="7" fill="#B65E42"/>
-      <rect x="4" y="28" width="32" height="7" fill="#6B1F2B"/>
-    </svg>
-    <span class="logo-word">ELCO</span>
-  </a>
-  <nav class="nav" aria-label="Navigation principale">
+<header class="top">
+  <a class="logo" href="#accueil" aria-label="ELCO — accueil"><img class="logo-img" src="logo.webp" alt="ELCO — Les femmes dans le BTP au Sénégal"></a>
+  <nav class="nav" aria-label="Navigation">
     <a href="#accueil" data-nav="accueil">Accueil</a>
-    <a href="#roulette" data-nav="roulette">La roulette</a>
-    <a href="#categories" data-nav="categories">Les catégories</a>
     <a href="#apropos" data-nav="apropos">À propos</a>
+    <button type="button" id="soundBtn" aria-pressed="true" title="Activer ou couper les sons">Sons : oui</button>
+    <button type="button" id="themeBtn" title="Fond blanc, sombre ou automatique (selon l’appareil)">Fond : auto</button>
   </nav>
 </header>
 
 <main id="main" tabindex="-1">
 
-<!-- ================= ACCUEIL ================= -->
-<section class="view" id="view-accueil" data-view="accueil">
+<!-- ACCUEIL -->
+<section class="view wrap" id="view-accueil" data-view="accueil">
   <div class="hero">
-    <div class="hero-text">
-      <p class="eyebrow">Podcast · Les femmes dans le BTP au Sénégal</p>
-      <h1>Nos voix.<br>Nos parcours.<br><em>Nos vérités.</em></h1>
-      <p class="lead">Deux femmes, un micro, 100 questions et des conversations sans filtre sur la réalité du BTP.</p>
-      <div class="hero-cta">
-        <a class="btn btn-primary btn-lg" href="#roulette">Lancer la roulette</a>
-        <a class="btn btn-ghost" href="#categories">Voir les catégories</a>
-      </div>
+    <p class="eyebrow">Podcast ELCO</p>
+    <h1>Les Femmes dans le BTP au Sénégal</h1>
+    <p>Des idées, des expériences et des voix qui font avancer le BTP.</p>
+    <button class="btn btn-pink btn-lg" type="button" data-act="start-tous">Lancer une session</button>
+  </div>
+  <div class="grid" id="modeGrid"></div>
+</section>
+
+<!-- CHOIX / LANCEMENT D'UN MODE -->
+<section class="view wrap" id="view-mode" data-view="mode" hidden>
+  <button class="back" type="button" data-nav-to="accueil">← Tous les modes</button>
+  <div id="resumeBox"></div>
+  <div class="two">
+    <div class="panel">
+      <p class="eyebrow" id="mEyebrow">Mode</p>
+      <h2 id="mTitle"></h2>
+      <p id="mDesc"></p>
+      <h3 style="font-size:1.1rem;margin-top:1.2rem" id="mCatTitle">Thématiques</h3>
+      <div class="chips" id="mCats"></div>
+      <p class="lbl" style="margin:1rem 0 .2rem">Types de questions</p>
+      <div id="mTypes"></div>
+      <div class="note" id="mNote"></div>
     </div>
-    <a class="hero-wheel" href="#roulette" aria-label="Ouvrir la roulette" id="heroWheel"></a>
-  </div>
-
-  <div class="band band-beige">
-    <div class="wrap two">
-      <div>
-        <p class="eyebrow">Le concept</p>
-        <h2>Le génie civil au féminin&nbsp;: s’affirmer, protéger son travail, entreprendre.</h2>
+    <div class="panel">
+      <h2>Paramètres de session</h2>
+      <div class="field"><label for="nameA">Participante A</label><input type="text" id="nameA" maxlength="28" autocomplete="off"></div>
+      <div class="field"><label for="nameB">Participante B</label><input type="text" id="nameB" maxlength="28" autocomplete="off"></div>
+      <div class="field" id="timerField" hidden><label>Temps de réponse (questions flash)</label>
+        <div class="seg" id="timerSeg"></div>
       </div>
-      <p class="big-p">ELCO donne la parole aux femmes du bâtiment et des travaux publics. Terrain, leadership, inégalités, argent, émotions&nbsp;: une roulette tire la question, deux participantes se relaient le micro, et la conversation fait le reste.</p>
-    </div>
-  </div>
-
-  <div class="wrap section">
-    <p class="eyebrow">Les règles du jeu</p>
-    <ol class="rules">
-      <li><span class="num">01</span><h3>Tirer une question</h3><p>La roulette choisit une catégorie, puis une question qui n’est jamais répétée.</p></li>
-      <li><span class="num">02</span><h3>Se relayer le micro</h3><p>Chacune son tour. Un seul micro, une seule voix à la fois.</p></li>
-      <li><span class="num">03</span><h3>Partager son expérience</h3><p>Le terrain, le doute, la fierté&nbsp;: on raconte, sans filtre et sans jugement.</p></li>
-      <li><span class="num">04</span><h3>Avoir le droit de passer</h3><p>Chacune peut passer, sans avoir à s’expliquer. C’est la règle d’or.</p></li>
-    </ol>
-  </div>
-
-  <div class="band band-wine">
-    <div class="wrap vision">
-      <p class="eyebrow">La vision d’ELCO</p>
-      <p class="vision-q">Que chaque jeune ingénieure, technicienne ou cheffe d’entreprise du BTP entende qu’elle n’est pas seule, et qu’elle a sa place sur le chantier.</p>
-      <a class="btn btn-light btn-lg" href="#roulette">Commencer maintenant</a>
+      <p id="mCount" style="color:var(--muted);font-size:.92rem"></p>
+      <button class="btn btn-pink btn-lg" style="width:100%;margin-top:.8rem" type="button" data-act="go-wheel">Aller à la roulette</button>
     </div>
   </div>
 </section>
 
-<!-- ================= ROULETTE ================= -->
-<section class="view" id="view-roulette" data-view="roulette" hidden>
-  <div class="studio wrap-wide">
-
-    <div class="wheel-col">
-      <div class="wheel-wrap" id="wheelWrap">
-        <div class="pointer" aria-hidden="true"></div>
-        <div id="wheelMount"></div>
-      </div>
-      <div class="focus">
-        <label for="focusSel">Catégorie</label>
-        <select id="focusSel"></select>
-      </div>
-      <button class="btn btn-primary btn-xl" id="spinBtn" data-act="spin" type="button">FAIRE TOURNER LA ROULETTE</button>
-      <p class="hint">Raccourcis&nbsp;: <kbd>Espace</kbd> tirer · <kbd>N</kbd> tour suivant · <kbd>P</kbd> passer · <kbd>M</kbd> micro · <kbd>H</kbd> historique</p>
+<!-- ROULETTE -->
+<section class="view wrap" id="view-roulette" data-view="roulette" hidden>
+  <button class="back" type="button" data-nav-to="mode">← Paramètres du mode</button>
+  <div class="roul">
+    <div class="wheel" id="wheel" role="button" tabindex="0" aria-label="Roulette : toucher pour la lancer">
+      <div class="ptr"></div><div id="wheelMount"></div>
     </div>
-
-    <div class="play-col">
-      <div class="meter" aria-live="polite">
-        <div class="meter-top">
-          <strong id="mCount">0 / 100</strong> <span>questions tirées</span>
-          <span class="dot-sep">·</span>
-          <span id="mLeft">100 restantes</span>
-        </div>
-        <div class="bar"><i id="mBar"></i></div>
+    <div class="rside">
+      <p class="eyebrow" id="wMode"></p>
+      <h2>Laissez le hasard choisir.</h2>
+      <p>La roulette tire une thématique parmi celles que vous avez gardées, puis une question encore disponible. Touchez la roue ou le bouton pour la lancer.</p>
+      <div class="stats">
+        <div><b id="wLeft">0</b><span>questions restantes</span></div>
+        <div><b id="wDone">0</b><span>déjà tirées</span></div>
       </div>
-
-      <article class="stage" id="stage" aria-live="polite"></article>
-
-      <div class="actions" id="actions"></div>
-
-      <section class="duo" aria-label="Prise de parole">
-        <div class="duo-head">
-          <h2>Qui parle&nbsp;?</h2>
-          <span class="duo-status" id="duoStatus"></span>
-        </div>
-        <div class="duo-grid">
-          <div class="who" id="whoA">
-            <label for="nameA" class="sr">Nom de la participante A</label>
-            <input id="nameA" class="who-name" maxlength="28" autocomplete="off">
-            <div class="who-state"><span class="pulse"></span><span class="who-txt"></span></div>
-            <button class="btn btn-soft" type="button" data-act="starter" data-who="A">Je commence</button>
-          </div>
-          <div class="who" id="whoB">
-            <label for="nameB" class="sr">Nom de la participante B</label>
-            <input id="nameB" class="who-name" maxlength="28" autocomplete="off">
-            <div class="who-state"><span class="pulse"></span><span class="who-txt"></span></div>
-            <button class="btn btn-soft" type="button" data-act="starter" data-who="B">Je commence</button>
-          </div>
-        </div>
-        <div class="duo-actions">
-          <button class="btn btn-wine" type="button" data-act="passmic">À toi de répondre</button>
-          <button class="btn btn-ghost" type="button" data-act="flip" title="Inverser le sens du tour">⇄ Inverser le sens du tour</button>
-        </div>
-      </section>
-
-      <div class="tools">
-        <button class="btn btn-ghost" type="button" data-act="rec-on">Mode enregistrement</button>
-        <button class="btn btn-ghost" type="button" data-act="reset">Nouvelle session</button>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= CATEGORIES ================= -->
-<section class="view" id="view-categories" data-view="categories" hidden>
-  <div class="wrap section">
-    <p class="eyebrow">Les catégories</p>
-    <h1 class="h1-sm">Huit thèmes, 100 questions.</h1>
-    <p class="lead dark">Chaque tour de roulette tombe sur un thème, puis sur une question de ce thème.</p>
-    <div id="catList" class="cat-list"></div>
-  </div>
-</section>
-
-<!-- ================= A PROPOS ================= -->
-<section class="view" id="view-apropos" data-view="apropos" hidden>
-  <div class="wrap section about">
-    <p class="eyebrow">À propos</p>
-    <h1 class="h1-sm">ELCO, la parole aux femmes du BTP.</h1>
-    <p class="big-p">ELCO est un podcast qui donne la parole aux femmes du bâtiment et des travaux publics au Sénégal. Il parle du terrain et de ses défis techniques, de leadership, d’inégalités, d’entrepreneuriat, d’expériences personnelles, d’émotions et de santé mentale.</p>
-    <blockquote>Le génie civil au féminin&nbsp;: s’affirmer, protéger son travail, entreprendre.</blockquote>
-    <h2>Utiliser le site pendant un enregistrement</h2>
-    <ul class="plain">
-      <li>Ouvrez <a href="#roulette">La roulette</a>, donnez un prénom à chaque participante.</li>
-      <li>Le <strong>mode enregistrement</strong> plein écran n’affiche que l’essentiel&nbsp;; <kbd>Échap</kbd> pour en sortir.</li>
-      <li>Les questions sensibles portent une mention discrète, avec «&nbsp;Passer sans expliquer&nbsp;».</li>
-      <li>La progression est conservée dans ce navigateur, même après actualisation.</li>
-      <li>L’historique de la session s’exporte en CSV ou TXT.</li>
-    </ul>
-    <p><a class="btn btn-ghost" href="#admin">Gérer les questions</a></p>
-  </div>
-</section>
-
-<!-- ================= ADMIN ================= -->
-<section class="view" id="view-admin" data-view="admin" hidden>
-  <div class="wrap section">
-    <p class="eyebrow">Gestion</p>
-    <h1 class="h1-sm">Les questions</h1>
-    <p class="note">Cet espace fonctionne sur cet appareil et n’est pas protégé par mot de passe&nbsp;: les modifications restent dans le navigateur. Une vraie protection nécessiterait un serveur.</p>
-
-    <form class="add" id="addForm" autocomplete="off">
-      <h2>Ajouter une question</h2>
-      <label class="sr" for="addText">Texte de la question</label>
-      <textarea id="addText" rows="2" placeholder="Écrivez la question…" required></textarea>
       <div class="row">
-        <label class="sr" for="addCat">Catégorie</label>
-        <select id="addCat"></select>
-        <label class="chk"><input type="checkbox" id="addSens"> Sujet sensible</label>
-        <button class="btn btn-primary" type="submit">Ajouter</button>
+        <button class="btn btn-pink btn-lg" id="spinBtn" type="button" data-act="spin">Lancer la roulette</button>
+        <button class="btn btn-line" type="button" data-act="shuffle">Mélanger les questions</button>
       </div>
-    </form>
-
-    <div class="admin-bar">
-      <label class="sr" for="aSearch">Rechercher</label>
-      <input id="aSearch" type="search" placeholder="Rechercher une question…">
-      <label class="sr" for="aCat">Filtrer par catégorie</label>
-      <select id="aCat"></select>
-      <span id="aCount" class="muted"></span>
-    </div>
-
-    <ul class="qlist" id="qList"></ul>
-
-    <div class="io">
-      <h2>Importer / exporter</h2>
-      <div class="row">
-        <label class="btn btn-ghost" for="importFile">Importer JSON ou CSV</label>
-        <input type="file" id="importFile" accept=".json,.csv,application/json,text/csv" hidden>
-        <button class="btn btn-ghost" type="button" data-act="q-export-json">Exporter JSON</button>
-        <button class="btn btn-ghost" type="button" data-act="q-export-csv">Exporter CSV</button>
-        <button class="btn btn-danger" type="button" data-act="q-restore">Rétablir les 100 questions d’origine</button>
+      <div class="row" style="margin-top:.7rem">
+        <button class="btn btn-line btn-sm" type="button" data-act="hist">Historique</button>
+        <button class="btn btn-line btn-sm" type="button" data-act="reset">Réinitialiser la session</button>
       </div>
-      <p class="muted">Import&nbsp;: JSON (liste d’objets <code>{"cat":1,"text":"…"}</code>) ou CSV avec colonnes <code>categorie;question</code>. Les doublons sont ignorés.</p>
+      <p class="msg" id="wMsg" aria-live="polite"></p>
+      <p class="hint"><kbd>Espace</kbd> lancer · <kbd>N</kbd> suivante · <kbd>P</kbd> passer · <kbd>M</kbd> micro · <kbd>H</kbd> historique</p>
     </div>
   </div>
 </section>
 
+<!-- QUESTION -->
+<section class="view wrap" id="view-question" data-view="question" hidden>
+  <div class="qtop">
+    <div class="badges" id="qBadges"></div>
+    <span class="badge" id="qCount"></span>
+  </div>
+  <article class="qcard" id="qCard" aria-live="polite"></article>
+  <div class="qbar">
+    <div class="mic">
+      <div class="who" id="whoA"><span class="dot"></span><div><input type="text" aria-label="Nom de la participante A" maxlength="28"><small></small></div></div>
+      <div class="who" id="whoB"><span class="dot"></span><div><input type="text" aria-label="Nom de la participante B" maxlength="28"><small></small></div></div>
+      <button class="btn btn-line" type="button" data-act="passmic">À toi de répondre</button>
+    </div>
+    <div class="tbox" id="qTimer" hidden></div>
+  </div>
+  <div class="actions">
+    <button class="btn btn-pink" type="button" data-act="next">Question suivante</button>
+    <button class="btn btn-line" type="button" data-act="skip" id="skipBtn">Je passe</button>
+    <button class="btn btn-line" type="button" data-act="to-wheel">Revenir à la roulette</button>
+    <button class="btn btn-line" type="button" data-act="hist">Historique</button>
+    <button class="btn btn-solid" type="button" data-act="rec-on">Mode tournage</button>
+  </div>
+</section>
+
+<!-- A PROPOS -->
+<section class="view wrap about" id="view-apropos" data-view="apropos" hidden>
+  <p class="eyebrow">À propos</p>
+  <h1>ELCO, la parole aux femmes du BTP.</h1>
+  <p>ELCO est un podcast qui donne la parole aux femmes du bâtiment et des travaux publics au Sénégal : le terrain, les défis techniques, le leadership, l’entrepreneuriat, les émotions et la santé mentale.</p>
+  <ul>
+    <li>Choisissez un mode, gardez les thématiques voulues, puis lancez la roulette.</li>
+    <li>Chacune peut passer une question, sans avoir à s’expliquer.</li>
+    <li>Le <strong>mode tournage</strong> affiche l’essentiel en plein écran ; <kbd>Échap</kbd> pour en sortir.</li>
+    <li>La progression et les modifications restent dans ce navigateur. Aucune caméra ni aucun micro n’est utilisé.</li>
+  </ul>
+  <p><a class="btn btn-line" href="#admin">Gérer les questions</a></p>
+</section>
+
+<!-- ADMINISTRATION -->
+<section class="view wrap admin" id="view-admin" data-view="admin" hidden>
+  <p class="eyebrow">Gestion</p>
+  <h1>Les questions</h1>
+  <p class="note">Cet espace fonctionne sur cet appareil et n’est pas protégé par mot de passe : les modifications restent dans le navigateur. Une vraie protection nécessiterait un serveur.</p>
+  <div id="adminSummary" class="row" style="margin-top:1rem"></div>
+
+  <div class="block">
+    <h2>Modes disponibles pendant un tournage</h2>
+    <div class="modes-toggle" id="modesToggle"></div>
+    <div class="checks" style="margin-top:.8rem">
+      <label class="chk"><input type="checkbox" id="allowRepeat"> Autoriser la répétition d’une question dans une session (quand toutes ont été tirées)</label>
+    </div>
+  </div>
+
+  <form class="block" id="addForm" autocomplete="off">
+    <h2>Ajouter une question</h2>
+    <div class="field"><label for="addText">Texte</label><textarea id="addText" rows="2" required></textarea></div>
+    <div class="form-grid">
+      <div class="field"><label for="addTheme">Thématique</label><select id="addTheme"></select></div>
+      <div class="field"><label for="addNewTheme">ou nouvelle thématique</label><input type="text" id="addNewTheme" placeholder="Nom (facultatif)"></div>
+      <div class="field"><label for="addDiff">Difficulté</label><select id="addDiff"><option value="1">1 — facile</option><option value="2" selected>2 — moyenne</option><option value="3">3 — difficile</option></select></div>
+      <div class="field"><label for="addType">Type</label><input type="text" id="addType" list="typeList" placeholder="Connaissance…"></div>
+    </div>
+    <div class="field"><label>Modes</label><div class="checks" id="addModes"></div></div>
+    <div class="form-grid">
+      <div class="field"><label for="addSource">Source (actualité)</label><input type="text" id="addSource" placeholder="Organisme, article…"></div>
+      <div class="field"><label for="addDate">Date de la source</label><input type="date" id="addDate"></div>
+      <label class="chk"><input type="checkbox" id="addSens"> Sujet sensible</label>
+      <button class="btn btn-pink" type="submit">Ajouter</button>
+    </div>
+    <datalist id="typeList"></datalist>
+  </form>
+
+  <div class="admin-bar">
+    <input type="search" id="aSearch" placeholder="Rechercher une question…" aria-label="Rechercher">
+    <select id="aMode" aria-label="Filtrer par mode"></select>
+    <select id="aTheme" aria-label="Filtrer par thématique"></select>
+    <select id="aDiff" aria-label="Filtrer par difficulté"><option value="0">Toutes difficultés</option><option value="1">Facile</option><option value="2">Moyenne</option><option value="3">Difficile</option></select>
+    <select id="aActive" aria-label="Filtrer par statut"><option value="all">Actives et inactives</option><option value="on">Actives</option><option value="off">Inactives</option></select>
+    <span id="aCount" style="color:var(--muted)"></span>
+  </div>
+  <ul class="qlist" id="qList"></ul>
+  <p class="row" style="margin-top:1rem"><button class="btn btn-line" type="button" id="moreBtn" hidden>Afficher plus</button></p>
+
+  <div class="block">
+    <h2>Importer / exporter</h2>
+    <div class="row">
+      <label class="btn btn-line" for="importFile">Importer JSON ou CSV</label>
+      <input type="file" id="importFile" accept=".json,.csv,application/json,text/csv" hidden>
+      <button class="btn btn-line" type="button" data-act="q-export-json">Exporter JSON</button>
+      <button class="btn btn-line" type="button" data-act="q-export-csv">Exporter CSV</button>
+      <button class="btn btn-danger" type="button" data-act="q-restore">Rétablir la banque d’origine</button>
+    </div>
+    <p style="color:var(--muted);font-size:.9rem;margin-top:.6rem">JSON : liste d’objets <code>{"text":"…","theme":"…","modes":["flash"]}</code>. CSV : colonnes <code>question;theme;modes</code> (modes séparés par |). Les doublons sont ignorés.</p>
+  </div>
+
+  <div class="block">
+    <h2>Historique des sessions</h2>
+    <div id="sessList"></div>
+  </div>
+</section>
 </main>
 
 <footer class="foot">
-  <div class="wrap-wide foot-in">
-    <span><strong>ELCO</strong> · Les femmes dans le BTP au Sénégal</span>
-    <span><a href="#admin">Gérer les questions</a></span>
-  </div>
+  <span><strong>ELCO</strong> · Les femmes dans le BTP au Sénégal</span>
+  <span><a href="#admin">Administration</a></span>
 </footer>
 
 <!-- Historique -->
 <aside class="hist" id="hist" hidden aria-label="Questions tirées">
-  <div class="hist-head">
-    <h2>Questions tirées</h2>
-    <button class="icon-btn" type="button" data-act="hist-close" aria-label="Fermer l’historique">✕</button>
-  </div>
+  <div class="hist-head"><h2>Questions tirées</h2><button class="icon-btn" type="button" data-act="hist-close" aria-label="Fermer">✕</button></div>
   <div class="hist-tools">
-    <label class="sr" for="hFilter">Filtrer par catégorie</label>
-    <select id="hFilter"></select>
-    <button class="btn btn-soft" type="button" data-act="back-current">Revenir à la question en cours</button>
+    <select id="hFilter" aria-label="Filtrer par mode"></select>
+    <button class="btn btn-pink btn-sm" type="button" data-act="back-current">Revenir à la question en cours</button>
   </div>
   <ul class="hlist" id="hList"></ul>
   <div class="hist-foot">
-    <button class="btn btn-ghost" type="button" data-act="export-csv">Exporter CSV</button>
-    <button class="btn btn-ghost" type="button" data-act="export-txt">Exporter TXT</button>
+    <button class="btn btn-line" type="button" data-act="export-csv">Exporter CSV</button>
+    <button class="btn btn-line" type="button" data-act="export-txt">Exporter TXT</button>
   </div>
 </aside>
 
-<!-- Mode enregistrement -->
-<div class="rec" id="rec" hidden role="region" aria-label="Mode enregistrement">
-  <div class="rec-top">
-    <span class="rec-logo">ELCO</span>
-    <span class="rec-count" id="rCount"></span>
-    <button class="rec-exit" type="button" data-act="rec-off">Quitter <kbd>Échap</kbd></button>
+<!-- Mode tournage -->
+<div class="rec" id="rec" hidden role="region" aria-label="Mode tournage">
+  <button class="hidebar" id="hideBar" type="button" aria-label="Afficher les commandes"></button>
+  <div class="head">
+    <img class="logo-img" src="logo.webp" alt="ELCO">
+    <div class="lab" id="rLab"></div>
+    <div class="row ctrl">
+      <button class="btn btn-line btn-sm" type="button" data-act="rec-hide">Masquer les commandes</button>
+      <button class="btn btn-line btn-sm" type="button" data-act="rec-full">Plein écran</button>
+      <button class="btn btn-solid btn-sm" type="button" data-act="rec-off">Interface normale (Échap)</button>
+    </div>
   </div>
-  <div class="rec-main" id="rMain"></div>
-  <div class="rec-speaker" id="rSpeaker"></div>
-  <div class="rec-actions" id="rActions"></div>
+  <div class="body">
+    <div class="q" id="rQ"></div>
+    <div class="sens" id="rSens" hidden>Sujet sensible — vous pouvez passer sans vous expliquer.</div>
+    <div class="tbox big" id="rTimer" hidden></div>
+  </div>
+  <div class="foot2">
+    <div class="who on" id="rWhoA"><span class="dot"></span><div><strong></strong><small></small></div></div>
+    <div class="who" id="rWhoB"><span class="dot"></span><div><strong></strong><small></small></div></div>
+    <button class="btn btn-line ctrl" type="button" data-act="passmic">À toi de répondre</button>
+    <button class="btn btn-pink ctrl" type="button" data-act="next">Question suivante</button>
+    <button class="btn btn-line ctrl" type="button" data-act="skip" id="rSkip">Je passe</button>
+  </div>
 </div>
 
 <dialog id="dlg">
   <form method="dialog" class="dlg-in">
-    <h2 id="dlgTitle"></h2>
-    <p id="dlgBody"></p>
+    <h2 id="dlgTitle"></h2><p id="dlgBody"></p>
     <div class="dlg-btns">
-      <button class="btn btn-ghost" value="cancel" id="dlgNo">Annuler</button>
-      <button class="btn btn-wine" value="ok" id="dlgYes">Confirmer</button>
+      <button class="btn btn-line" value="cancel" id="dlgNo">Annuler</button>
+      <button class="btn btn-pink" value="ok" id="dlgYes">Confirmer</button>
     </div>
   </form>
 </dialog>
-
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-<script src="questions.js"></script>
+<script src="data.js"></script>
 <script src="app.js"></script>
 </body>
 </html>
