@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ELCO — Les femmes dans le BTP au Sénégal</title>
+<meta name="description" content="ELCO, le podcast qui donne la parole aux femmes du BTP au Sénégal. Une roulette de 100 questions pour deux voix et un micro.">
+<meta name="theme-color" content="#6B1F2B">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip" href="#main">Aller au contenu</a>
+
+<header class="top" id="top">
+  <a class="logo" href="#accueil" aria-label="ELCO — accueil">
+    <svg class="logo-mark" viewBox="0 0 40 40" aria-hidden="true">
+      <rect x="4" y="5" width="32" height="7" fill="#6B1F2B"/>
+      <rect x="4" y="16.5" width="22" height="7" fill="#B65E42"/>
+      <rect x="4" y="28" width="32" height="7" fill="#6B1F2B"/>
+    </svg>
+    <span class="logo-word">ELCO</span>
+  </a>
+  <nav class="nav" aria-label="Navigation principale">
+    <a href="#accueil" data-nav="accueil">Accueil</a>
+    <a href="#roulette" data-nav="roulette">La roulette</a>
+    <a href="#categories" data-nav="categories">Les catégories</a>
+    <a href="#apropos" data-nav="apropos">À propos</a>
+  </nav>
+</header>
+
+<main id="main" tabindex="-1">
+
+<!-- ================= ACCUEIL ================= -->
+<section class="view" id="view-accueil" data-view="accueil">
+  <div class="hero">
+    <div class="hero-text">
+      <p class="eyebrow">Podcast · Les femmes dans le BTP au Sénégal</p>
+      <h1>Nos voix.<br>Nos parcours.<br><em>Nos vérités.</em></h1>
+      <p class="lead">Deux femmes, un micro, 100 questions et des conversations sans filtre sur la réalité du BTP.</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary btn-lg" href="#roulette">Lancer la roulette</a>
+        <a class="btn btn-ghost" href="#categories">Voir les catégories</a>
+      </div>
+    </div>
+    <a class="hero-wheel" href="#roulette" aria-label="Ouvrir la roulette" id="heroWheel"></a>
+  </div>
+
+  <div class="band band-beige">
+    <div class="wrap two">
+      <div>
+        <p class="eyebrow">Le concept</p>
+        <h2>Le génie civil au féminin&nbsp;: s’affirmer, protéger son travail, entreprendre.</h2>
+      </div>
+      <p class="big-p">ELCO donne la parole aux femmes du bâtiment et des travaux publics. Terrain, leadership, inégalités, argent, émotions&nbsp;: une roulette tire la question, deux participantes se relaient le micro, et la conversation fait le reste.</p>
+    </div>
+  </div>
+
+  <div class="wrap section">
+    <p class="eyebrow">Les règles du jeu</p>
+    <ol class="rules">
+      <li><span class="num">01</span><h3>Tirer une question</h3><p>La roulette choisit une catégorie, puis une question qui n’est jamais répétée.</p></li>
+      <li><span class="num">02</span><h3>Se relayer le micro</h3><p>Chacune son tour. Un seul micro, une seule voix à la fois.</p></li>
+      <li><span class="num">03</span><h3>Partager son expérience</h3><p>Le terrain, le doute, la fierté&nbsp;: on raconte, sans filtre et sans jugement.</p></li>
+      <li><span class="num">04</span><h3>Avoir le droit de passer</h3><p>Chacune peut passer, sans avoir à s’expliquer. C’est la règle d’or.</p></li>
+    </ol>
+  </div>
+
+  <div class="band band-wine">
+    <div class="wrap vision">
+      <p class="eyebrow">La vision d’ELCO</p>
+      <p class="vision-q">Que chaque jeune ingénieure, technicienne ou cheffe d’entreprise du BTP entende qu’elle n’est pas seule, et qu’elle a sa place sur le chantier.</p>
+      <a class="btn btn-light btn-lg" href="#roulette">Commencer maintenant</a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ROULETTE ================= -->
+<section class="view" id="view-roulette" data-view="roulette" hidden>
+  <div class="studio wrap-wide">
+
+    <div class="wheel-col">
+      <div class="wheel-wrap" id="wheelWrap">
+        <div class="pointer" aria-hidden="true"></div>
+        <div id="wheelMount"></div>
+      </div>
+      <button class="btn btn-primary btn-xl" id="spinBtn" data-act="spin" type="button">FAIRE TOURNER LA ROULETTE</button>
+      <p class="hint">Raccourcis&nbsp;: <kbd>Espace</kbd> tirer · <kbd>N</kbd> tour suivant · <kbd>P</kbd> passer · <kbd>M</kbd> micro · <kbd>H</kbd> historique</p>
+    </div>
+
+    <div class="play-col">
+      <div class="meter" aria-live="polite">
+        <div class="meter-top">
+          <strong id="mCount">0 / 100</strong> <span>questions tirées</span>
+          <span class="dot-sep">·</span>
+          <span id="mLeft">100 restantes</span>
+        </div>
+        <div class="bar"><i id="mBar"></i></div>
+      </div>
+
+      <article class="stage" id="stage" aria-live="polite"></article>
+
+      <div class="actions" id="actions"></div>
+
+      <section class="duo" aria-label="Prise de parole">
+        <div class="duo-head">
+          <h2>Qui parle&nbsp;?</h2>
+          <span class="duo-status" id="duoStatus"></span>
+        </div>
+        <div class="duo-grid">
+          <div class="who" id="whoA">
+            <label for="nameA" class="sr">Nom de la participante A</label>
+            <input id="nameA" class="who-name" maxlength="28" autocomplete="off">
+            <div class="who-state"><span class="pulse"></span><span class="who-txt"></span></div>
+            <button class="btn btn-soft" type="button" data-act="starter" data-who="A">Je commence</button>
+          </div>
+          <div class="who" id="whoB">
+            <label for="nameB" class="sr">Nom de la participante B</label>
+            <input id="nameB" class="who-name" maxlength="28" autocomplete="off">
+            <div class="who-state"><span class="pulse"></span><span class="who-txt"></span></div>
+            <button class="btn btn-soft" type="button" data-act="starter" data-who="B">Je commence</button>
+          </div>
+        </div>
+        <div class="duo-actions">
+          <button class="btn btn-wine" type="button" data-act="passmic">À toi de répondre</button>
+          <button class="btn btn-ghost" type="button" data-act="flip" title="Inverser le sens du tour">⇄ Inverser le sens du tour</button>
+        </div>
+      </section>
+
+      <div class="tools">
+        <button class="btn btn-ghost" type="button" data-act="rec-on">Mode enregistrement</button>
+        <button class="btn btn-ghost" type="button" data-act="reset">Nouvelle session</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CATEGORIES ================= -->
+<section class="view" id="view-categories" data-view="categories" hidden>
+  <div class="wrap section">
+    <p class="eyebrow">Les catégories</p>
+    <h1 class="h1-sm">Huit thèmes, 100 questions.</h1>
+    <p class="lead dark">Chaque tour de roulette tombe sur un thème, puis sur une question de ce thème.</p>
+    <div id="catList" class="cat-list"></div>
+  </div>
+</section>
+
+<!-- ================= A PROPOS ================= -->
+<section class="view" id="view-apropos" data-view="apropos" hidden>
+  <div class="wrap section about">
+    <p class="eyebrow">À propos</p>
+    <h1 class="h1-sm">ELCO, la parole aux femmes du BTP.</h1>
+    <p class="big-p">ELCO est un podcast qui donne la parole aux femmes du bâtiment et des travaux publics au Sénégal. Il parle du terrain et de ses défis techniques, de leadership, d’inégalités, d’entrepreneuriat, d’expériences personnelles, d’émotions et de santé mentale.</p>
+    <blockquote>Le génie civil au féminin&nbsp;: s’affirmer, protéger son travail, entreprendre.</blockquote>
+    <h2>Utiliser le site pendant un enregistrement</h2>
+    <ul class="plain">
+      <li>Ouvrez <a href="#roulette">La roulette</a>, donnez un prénom à chaque participante.</li>
+      <li>Le <strong>mode enregistrement</strong> plein écran n’affiche que l’essentiel&nbsp;; <kbd>Échap</kbd> pour en sortir.</li>
+      <li>Les questions sensibles portent une mention discrète, avec «&nbsp;Passer sans expliquer&nbsp;».</li>
+      <li>La progression est conservée dans ce navigateur, même après actualisation.</li>
+      <li>L’historique de la session s’exporte en CSV ou TXT.</li>
+    </ul>
+    <p><a class="btn btn-ghost" href="#admin">Gérer les questions</a></p>
+  </div>
+</section>
+
+<!-- ================= ADMIN ================= -->
+<section class="view" id="view-admin" data-view="admin" hidden>
+  <div class="wrap section">
+    <p class="eyebrow">Gestion</p>
+    <h1 class="h1-sm">Les questions</h1>
+    <p class="note">Cet espace fonctionne sur cet appareil et n’est pas protégé par mot de passe&nbsp;: les modifications restent dans le navigateur. Une vraie protection nécessiterait un serveur.</p>
+
+    <form class="add" id="addForm" autocomplete="off">
+      <h2>Ajouter une question</h2>
+      <label class="sr" for="addText">Texte de la question</label>
+      <textarea id="addText" rows="2" placeholder="Écrivez la question…" required></textarea>
+      <div class="row">
+        <label class="sr" for="addCat">Catégorie</label>
+        <select id="addCat"></select>
+        <label class="chk"><input type="checkbox" id="addSens"> Sujet sensible</label>
+        <button class="btn btn-primary" type="submit">Ajouter</button>
+      </div>
+    </form>
+
+    <div class="admin-bar">
+      <label class="sr" for="aSearch">Rechercher</label>
+      <input id="aSearch" type="search" placeholder="Rechercher une question…">
+      <label class="sr" for="aCat">Filtrer par catégorie</label>
+      <select id="aCat"></select>
+      <span id="aCount" class="muted"></span>
+    </div>
+
+    <ul class="qlist" id="qList"></ul>
+
+    <div class="io">
+      <h2>Importer / exporter</h2>
+      <div class="row">
+        <label class="btn btn-ghost" for="importFile">Importer JSON ou CSV</label>
+        <input type="file" id="importFile" accept=".json,.csv,application/json,text/csv" hidden>
+        <button class="btn btn-ghost" type="button" data-act="q-export-json">Exporter JSON</button>
+        <button class="btn btn-ghost" type="button" data-act="q-export-csv">Exporter CSV</button>
+        <button class="btn btn-danger" type="button" data-act="q-restore">Rétablir les 100 questions d’origine</button>
+      </div>
+      <p class="muted">Import&nbsp;: JSON (liste d’objets <code>{"cat":1,"text":"…"}</code>) ou CSV avec colonnes <code>categorie;question</code>. Les doublons sont ignorés.</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap-wide foot-in">
+    <span><strong>ELCO</strong> · Les femmes dans le BTP au Sénégal</span>
+    <span><a href="#admin">Gérer les questions</a></span>
+  </div>
+</footer>
+
+<!-- Historique -->
+<aside class="hist" id="hist" hidden aria-label="Questions tirées">
+  <div class="hist-head">
+    <h2>Questions tirées</h2>
+    <button class="icon-btn" type="button" data-act="hist-close" aria-label="Fermer l’historique">✕</button>
+  </div>
+  <div class="hist-tools">
+    <label class="sr" for="hFilter">Filtrer par catégorie</label>
+    <select id="hFilter"></select>
+    <button class="btn btn-soft" type="button" data-act="back-current">Revenir à la question en cours</button>
+  </div>
+  <ul class="hlist" id="hList"></ul>
+  <div class="hist-foot">
+    <button class="btn btn-ghost" type="button" data-act="export-csv">Exporter CSV</button>
+    <button class="btn btn-ghost" type="button" data-act="export-txt">Exporter TXT</button>
+  </div>
+</aside>
+
+<!-- Mode enregistrement -->
+<div class="rec" id="rec" hidden role="region" aria-label="Mode enregistrement">
+  <div class="rec-top">
+    <span class="rec-logo">ELCO</span>
+    <span class="rec-count" id="rCount"></span>
+    <button class="rec-exit" type="button" data-act="rec-off">Quitter <kbd>Échap</kbd></button>
+  </div>
+  <div class="rec-main" id="rMain"></div>
+  <div class="rec-speaker" id="rSpeaker"></div>
+  <div class="rec-actions" id="rActions"></div>
+</div>
+
+<dialog id="dlg">
+  <form method="dialog" class="dlg-in">
+    <h2 id="dlgTitle"></h2>
+    <p id="dlgBody"></p>
+    <div class="dlg-btns">
+      <button class="btn btn-ghost" value="cancel" id="dlgNo">Annuler</button>
+      <button class="btn btn-wine" value="ok" id="dlgYes">Confirmer</button>
+    </div>
+  </form>
+</dialog>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="questions.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
