@@ -101,6 +101,9 @@ code{background:var(--beige);padding:0 .3em;border-radius:3px;font-size:.9em}
 .sector.win{filter:brightness(1.18) saturate(1.1)}
 .sector.win-dim{opacity:.55}
 .sector{transition:opacity .4s,filter .4s}
+.focus{display:flex;align-items:center;gap:.6rem;width:100%;max-width:520px}
+.focus label{font:700 .78rem var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--terra)}
+.focus select{flex:1;min-width:0;width:auto}
 .hint{font-size:.85rem;color:var(--muted);text-align:center}
 
 .play-col{display:flex;flex-direction:column;gap:1.2rem;min-width:0}

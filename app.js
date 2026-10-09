@@ -118,8 +118,10 @@ function pickDraw() {
   const pool = available();
   if (!pool.length) return null;
   const secs = sectors();
+  const focus = secs.find(x => x.cat.id === S.focus && pool.some(q => q.cat === x.cat.id));
   for (let i = 0; i < 5000; i++) {
-    const u = rand() * 360;
+    // catégorie choisie : l'angle est tiré au hasard dans son secteur seulement
+    const u = focus ? focus.start + rand() * (focus.end - focus.start) : rand() * 360;
     const s = secs.find(x => u >= x.start && u < x.end);
     if (!s) continue;
     if (Math.min(u - s.start, s.end - u) < 0.8) continue; // évite la ligne de séparation
@@ -137,6 +139,9 @@ const wait = ms => new Promise(r => setTimeout(r, ms));
 
 async function spin() {
   if (spinning) return;
+  if (S.focus && !available().some(q => q.cat === S.focus)) {
+    S.focus = 0; saveSession(); toast('Catégorie épuisée : retour au tirage au hasard.');
+  }
   const pick = pickDraw();
   if (!pick) { render(); toast('Plus aucune question disponible : lancez une nouvelle session.'); return; }
   spinning = true;
@@ -236,6 +241,15 @@ function render(reveal = false) {
   sb.textContent = c ? 'TIRER UNE AUTRE QUESTION' : 'FAIRE TOURNER LA ROULETTE';
   sb.disabled = spinning || (!left);
   sb.hidden = !left && !c ? true : false;
+
+  // catégorie choisie
+  const fs = $('#focusSel');
+  fs.innerHTML = `<option value="0">Toutes (au hasard)</option>` + cats.map(c => {
+    const n = available().filter(q => q.cat === c.id).length;
+    return `<option value="${c.id}"${n ? '' : ' disabled'}>${esc(c.id + '. ' + c.name)} (${n})</option>`;
+  }).join('');
+  fs.value = String(S.focus || 0); if (fs.value !== String(S.focus || 0)) fs.value = '0';
+  fs.disabled = spinning;
 
   // participantes
   ['A', 'B'].forEach(w => {
@@ -454,6 +468,7 @@ $('#addForm').addEventListener('submit', e => {
 $('#aSearch').addEventListener('input', renderAdmin);
 $('#aCat').addEventListener('change', renderAdmin);
 $('#hFilter').addEventListener('change', renderHistory);
+$('#focusSel').addEventListener('change', e => { S.focus = Number(e.target.value); saveSession(); });
 $('#qList').addEventListener('change', e => {
   const cs = e.target.dataset.qcat, ss = e.target.dataset.qsens;
   if (cs) { bank.questions.find(q => q.id === Number(cs)).cat = Number(e.target.value); afterBankChange(); toast('Catégorie modifiée.'); }
